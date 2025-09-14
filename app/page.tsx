@@ -16,7 +16,7 @@ export default function Home() {
         <DemoSection />
         <HowITWorkSection />
         <PRICING />
-        <CTASection/>
+        <CTASection />
       </div>
     </div>
   );

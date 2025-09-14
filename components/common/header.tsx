@@ -7,7 +7,7 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-} from '@clerk/nextjs'
+} from "@clerk/nextjs";
 
 export default function header() {
   return (
@@ -25,18 +25,14 @@ export default function header() {
       </div>
 
       <div className="flex lg:justify-center gap-4">
-          <NavLink href={"/#pricing"}>Pricing</NavLink>
-          <SignedIn>
-            <NavLink href={"/dashboard"}>Your Summaires</NavLink>
-          </SignedIn>
-        
-        
+        <NavLink href={"/#pricing"}>Pricing</NavLink>
+        <SignedIn>
+          <NavLink href={"/dashboard"}>Your Summaires</NavLink>
+        </SignedIn>
       </div>
 
       <div className="flex lg:justify-end lg:flex-1">
-
-
-          <SignedIn>
+        <SignedIn>
           <div className="flex gap-2 items-center">
             <NavLink href={"/upload"}>Upload a PDf</NavLink>
             <div>Pro</div>
@@ -44,13 +40,12 @@ export default function header() {
               <UserButton />
             </SignedIn>
           </div>
-          </SignedIn>
-          <SignedOut>
+        </SignedIn>
+        <SignedOut>
           <div>
             <NavLink href={"/sign-in"}>Sign-in</NavLink>
           </div>
-          </SignedOut>
-        
+        </SignedOut>
       </div>
     </nav>
   );

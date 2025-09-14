@@ -10,7 +10,7 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-} from '@clerk/nextjs'
+} from "@clerk/nextjs";
 
 const fontSans = FontSans({
   variable: "--font-sans",
@@ -31,15 +31,15 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={`font-sans ${fontSans.variable} antialiased`}>
-        <div className="relative flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+      <html lang="en">
+        <body className={`font-sans ${fontSans.variable} antialiased`}>
+          <div className="relative flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
