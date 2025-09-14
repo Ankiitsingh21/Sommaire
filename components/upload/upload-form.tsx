@@ -27,7 +27,7 @@ export default function UploadForm() {
       console.log("error occurred while uploading", err);
       toast.error(`Error occurred while uploading: ${err.message}`);
     },
-    onUploadBegin: ({ file }) => {
+    onUploadBegin: ( file ) => {
       console.log("upload has begun for", file);
       toast(
         <div>
@@ -47,7 +47,7 @@ export default function UploadForm() {
 
     // Validate the file
     const validatedFields = schema.safeParse({ file });
-    console.log(validatedFields);
+//     console.log(validatedFields);
 
     if (!validatedFields.success) {
       toast.error(
@@ -92,7 +92,7 @@ export default function UploadForm() {
 
     // Generate summary
     const summary = await generatePDFSummary(resp);
-    console.log({summary})
+//     console.log({summary})
 
     // TODO: Save summary to database and redirect to summary page
     console.log("PDF summary:", summary);
