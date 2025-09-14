@@ -1,9 +1,9 @@
 "use client";
 import { z } from "zod";
-import { useState } from "react";
 import UploadFormInput from "./upload-formInput";
 import { useUploadThing } from "@/utils/uploadthings";
 import { toast } from "sonner";
+import { generatePDFSummary } from "@/actions/upload-actions";
 
 const schema = z.object({
   file: z
@@ -19,7 +19,7 @@ const schema = z.object({
 });
 
 export default function UploadForm() {
-  const { startUpload, routeConfig } = useUploadThing("PDFUploader", {
+  const { startUpload } = useUploadThing("PDFUploader", {
     onClientUploadComplete: () => {
       console.log("uploaded successfully!");
     },
@@ -29,6 +29,12 @@ export default function UploadForm() {
     },
     onUploadBegin: ({ file }) => {
       console.log("upload has begun for", file);
+      toast(
+        <div>
+          <strong>📄 Uploading PDF</strong>
+          <div>Hang tight! We are uploading your PDF ✨</div>
+        </div>,
+      );
     },
   });
 
@@ -39,11 +45,10 @@ export default function UploadForm() {
     const formData = new FormData(e.currentTarget);
     const file = formData.get("file") as File;
 
-    // Validating the fields
+    // Validate the file
     const validatedFields = schema.safeParse({ file });
     console.log(validatedFields);
 
-    // Schema validation with zod
     if (!validatedFields.success) {
       toast.error(
         <div>
@@ -54,39 +59,43 @@ export default function UploadForm() {
           </div>
         </div>,
       );
-
       return;
     }
+
+    // Uploading toast
     toast(
-       <div>
-         <strong>📄 Uploading PDF</strong>
-         <div>Hang tight! we are uploadig your pdf✨</div>
-       </div>,
-     );
-    
-    //then upload the file to uploadthing
-    
+      <div>
+        <strong>📄 Uploading PDF</strong>
+        <div>Hang tight! We are uploading your PDF ✨</div>
+      </div>,
+    );
+
+    // Upload the file
     const resp = await startUpload([file]);
     if (!resp) {
-            toast.error(
-                    <div>
+      toast.error(
+        <div>
           <strong>Something went wrong</strong>
           <div>Please use a different file</div>
         </div>,
       );
-      
       return;
-}
-//then parse the pdf using langchain
-     toast(
-       <div>
-         <strong>📄 Processing PDF</strong>
-         <div>Hang tight! Our AI is reading through your document! ✨</div>
-       </div>,
-     );
-    //summarize the pdf using AI
-    //save the summary to the database
-    //redirect to the summary page
+    }
+
+    // Processing PDF toast
+    toast(
+      <div>
+        <strong>📄 Processing PDF</strong>
+        <div>Hang tight! Our AI is reading through your document! ✨</div>
+      </div>,
+    );
+
+    // Generate summary
+    const summary = await generatePDFSummary(resp);
+    console.log({summary})
+
+    // TODO: Save summary to database and redirect to summary page
+    console.log("PDF summary:", summary);
   };
 
   return (

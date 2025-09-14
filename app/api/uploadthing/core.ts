@@ -25,7 +25,7 @@ export const ourFileRouter = {
       console.log("file url", file.url);
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { userId: metadata.userId, file: file.url };
+      return { userId: metadata.userId, file:file.url };
     }),
 } satisfies FileRouter;
 
