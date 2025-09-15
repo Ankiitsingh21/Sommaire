@@ -133,7 +133,7 @@ export default function UploadForm() {
           </div>,
         );
         formRef.current?.reset();
-        router.push(`/summaries/${storeResult.data.id}`)
+        router.push(`/summaries/${storeResult.data.id}`);
       }
     }
     // console.log('hello');

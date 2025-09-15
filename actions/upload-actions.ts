@@ -152,14 +152,13 @@ export async function storePdfSummaryAction({
     };
   }
 
-  revalidatePath(`/summaries/${savepdfSummary.id}`)
+  revalidatePath(`/summaries/${savepdfSummary.id}`);
 
-
-   return {
-      success: true,
-      message: "PDF summary saved successfully",
-      data:{
-        id:savepdfSummary.id
-      }
-    };
+  return {
+    success: true,
+    message: "PDF summary saved successfully",
+    data: {
+      id: savepdfSummary.id,
+    },
+  };
 }
