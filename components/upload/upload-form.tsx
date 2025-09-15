@@ -3,7 +3,13 @@ import { z } from "zod";
 import UploadFormInput from "./upload-formInput";
 import { useUploadThing } from "@/utils/uploadthings";
 import { toast } from "sonner";
-import { generatePDFSummary } from "@/actions/upload-actions";
+import {
+  generatePDFSummary,
+  storePdfSummaryAction,
+} from "@/actions/upload-actions";
+import { useRef } from "react";
+import { formatFileNameAsTitle } from "@/utils/format-utils";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   file: z
@@ -19,6 +25,8 @@ const schema = z.object({
 });
 
 export default function UploadForm() {
+  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
   const { startUpload } = useUploadThing("PDFUploader", {
     onClientUploadComplete: () => {
       console.log("uploaded successfully!");
@@ -27,7 +35,7 @@ export default function UploadForm() {
       console.log("error occurred while uploading", err);
       toast.error(`Error occurred while uploading: ${err.message}`);
     },
-    onUploadBegin: ( file ) => {
+    onUploadBegin: (file) => {
       console.log("upload has begun for", file);
       toast(
         <div>
@@ -47,7 +55,7 @@ export default function UploadForm() {
 
     // Validate the file
     const validatedFields = schema.safeParse({ file });
-//     console.log(validatedFields);
+    //     console.log(validatedFields);
 
     if (!validatedFields.success) {
       toast.error(
@@ -91,11 +99,47 @@ export default function UploadForm() {
     );
 
     // Generate summary
+    // console.log({resp});
     const summary = await generatePDFSummary(resp);
-//     console.log({summary})
+    // console.log({summary});
+
+    const { data = null, message = null } = summary || {};
+    // if(data){
+    //   console.log("Summary:", data.summary);
+    // }
+    // console.log("File URL:", resp[0].serverData.file.url);
+    // console.log("Title:", resp[0].name);
+    // console.log("File Name:", file.name);
+    if (data) {
+      let storeResult: any;
+      toast(
+        <div>
+          <strong>📄 Saving PDF...</strong>
+          <div>Hang tight! We are saving your summary! ✨</div>
+        </div>,
+      );
+      const FileName = formatFileNameAsTitle(resp[0].name);
+      if (data.summary) {
+        storeResult = await storePdfSummaryAction({
+          summary: data.summary,
+          fileUrl: resp[0].serverData.file.url,
+          title: FileName,
+          fileName: file.name,
+        });
+        toast(
+          <div>
+            <strong>✨ Summary saved!</strong>
+            <div>Your summary has been saved! ✨</div>
+          </div>,
+        );
+        formRef.current?.reset();
+        router.push(`/summaries/${storeResult.data.id}`)
+      }
+    }
+    // console.log('hello');
+    // console.log({summary})
 
     // TODO: Save summary to database and redirect to summary page
-    console.log("PDF summary:", summary);
   };
 
   return (

@@ -12,8 +12,11 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.32.0",
+    "@google/genai": "^1.19.0",
+    "@google/generative-ai": "^0.24.1",
     "@langchain/community": "^0.3.55",
     "@langchain/core": "^0.3.75",
+    "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-slot": "^1.2.3",
     "@uploadthing/react": "^7.3.3",
     "class-variance-authority": "^0.7.1",
