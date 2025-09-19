@@ -1,22 +1,21 @@
 import BgGradient from "@/components/common/bgGradient";
-import SummaryCard from "@/components/dashboard/summaries/summary-card";
+import EmptySummary from "@/components/summaries/empty-summary";
+import SummaryCard from "@/components/summaries/summary-card";
 import { Button } from "@/components/ui/button";
+import { GetSummary } from "@/lib/summaries";
+import { currentUser } from "@clerk/nextjs/server";
 import { ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const user = await currentUser();
+  if (!user?.id) {
+    return redirect("/sign-in");
+  }
   const UploadLimit = 5;
-  const summaries = [
-    {
-      id: 1,
-      title: "resume",
-      description: "description",
-      created_at: "2025-01-30 20:53:10.759642+00",
-      summary_text: "",
-      status: true,
-    },
-  ];
+  const summaries = await GetSummary(user.id);
   return (
     <main className="min-h-screen  ">
       <BgGradient className="from-emerald-200 via-teal-200 to-cyan-200" />
@@ -60,11 +59,15 @@ export default function Dashboard() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
-            {summaries.map((summary, index) => (
-              <SummaryCard summary={summary} key={index} />
-            ))}
-          </div>
+          {summaries.length === 0 ? (
+            <EmptySummary />
+          ) : (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
+              {summaries.map((summary, index) => (
+                <SummaryCard summary={summary} key={index} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </main>
