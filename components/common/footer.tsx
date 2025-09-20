@@ -41,7 +41,7 @@ export default function Footer() {
                        hover:from-rose-600 hover:to-rose-800"
             >
               <Link href="/upload" className="flex gap-2 items-center">
-                <Button className="bg-transparent" >Get Started Free</Button>
+                <Button className="bg-transparent hover:bg-transparent" >Get Started Free</Button>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>

@@ -23,7 +23,7 @@ export default function CTASection() {
                 variant={"link"}
               >
                 <Link
-                  href={"/#pricing"}
+                  href={"/upload"}
                   className="flex items-center justify-center  "
                 >
                   Get Started{" "}
