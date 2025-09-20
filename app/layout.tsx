@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Sommaire - AI-Powered PDF Summarization",
   description:
     "Save Hours of Reading Time. Transform Lengthy PDFs into clear, accurate summaries in seconds with our Advanced AI Technology.",
+     icons: {
+    icon: "/logoipsum-370.svg", // 👈 your custom logo
+  },
 };
 
 export default function RootLayout({
