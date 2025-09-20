@@ -122,7 +122,7 @@ export default function UploadForm() {
       if (data.summary) {
         storeResult = await storePdfSummaryAction({
           summary: data.summary,
-          fileUrl: resp[0].serverData.file.url,
+          fileUrl: resp[0].serverData.fileUrl,
           title: FileName,
           fileName: file.name,
         });
