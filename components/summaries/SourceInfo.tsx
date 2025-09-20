@@ -41,7 +41,7 @@ justify-between gap-4 text-sm text-muted-foreground"
           </a>
         </Button>
         <DownloadSummaryButton
-        fileName={fileName}
+          fileName={fileName}
           originalFileUrl={originalFileUrl}
           title={title}
           createdAt={createdAt}
