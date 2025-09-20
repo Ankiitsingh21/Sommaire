@@ -39,7 +39,7 @@ export default function HeroScetion() {
              bg-gradient-to-r from-rose-500 to-rose-900 
              hover:from-slate-900 hover:to-rose-50"
         >
-          <Link href="/#pricing" className="flex gap-2 items-center">
+          <Link href="/upload" className="flex gap-2 items-center">
             <span>Try Sommaire</span>
             <ArrowRight className="animate-pulse" />
           </Link>
